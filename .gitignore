@@ -1,0 +1,15 @@
+ETLenv/
+__pycache__/
+*.pyc
+
+lakehouse/
+outputs/
+*.parquet
+*.duckdb
+*.db
+
+.vscode/
+Thumbs.db
+.DS_Store
+
+data/
