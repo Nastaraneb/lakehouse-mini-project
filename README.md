@@ -62,8 +62,12 @@ All KPIs are materialized as Parquet and registered in DuckDB.
 ## How to Run
 
 ```bash
-# Setup
-pip install -r requirements.txt
+# Setup requirements
+
+pandas>=2.0.0
+duckdb>=0.9.0
+pyarrow>=14.0.0
+python-dateutil>=2.8.2
 
 # Bronze
 python -m src.bronze.events
