@@ -62,14 +62,27 @@ All KPIs are materialized as Parquet and registered in DuckDB.
 ## How to Run
 
 ```bash
-# Run Bronze
-python -m src.bronze.*
+# Setup
+pip install -r requirements.txt
 
-# Run Silver
-python -m src.silver.*
+# Bronze
+python -m src.bronze.events
+python -m src.bronze.marketing
+python -m src.bronze.subscriptions
 
-# Run Gold
-python -m src.gold.*
+# Silver
+python -m src.silver.events
+python -m src.silver.marketing
+python -m src.silver.subscriptions
 
-# Load Gold tables into DuckDB
+# Gold Metrics
+python -m src.gold.metrics_basic
+python -m src.gold.mrr
+python -m src.gold.cohort_retention
+python -m src.gold.cac
+python -m src.gold.ltv
+python -m src.gold.ltv_cac_ratio
+
+# Load into DuckDB
 python -m src.gold.load_to_duckdb
+python -m src.gold.build_dims
