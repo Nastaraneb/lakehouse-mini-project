@@ -1,7 +1,9 @@
 import pandas as pd
 from dateutil import parser, tz
+from src.common.logger import get_logger
+logger = get_logger("silver_events")
 
-from src.paths import BRONZE_DIR, SILVER_DIR, QUARANTINE_DIR
+from src.common.paths import BRONZE_DIR, SILVER_DIR, QUARANTINE_DIR
 
 
 def parse_to_utc(ts_text):
@@ -51,13 +53,13 @@ def main():
         ["event_id", "event_ts_utc", "_source_line_no"],
         ascending=[True, False, False],
     )
-    good_df = good_df.drop_duplicates(subset=["event_id"], keep="first")
+    good_df = good_df.drop_duplicates(subset=["event_id"], keep="first") #event_id (string) — supposed to be unique but is not always. so I fixed it!
 
     good_df.to_parquet(SILVER_DIR / "events_clean.parquet", index=False)
     bad_df.to_parquet(QUARANTINE_DIR / "events_rejected_silver.parquet", index=False)
 
-    print(" Silver events saved:", len(good_df))
-    print(" Silver rejected saved:", len(bad_df))
+    logger.info(f"Silver events saved: {len(good_df)}")
+    logger.info(f"Silver rejected saved: {len(bad_df)}")
 
 
 if __name__ == "__main__":

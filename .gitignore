@@ -13,3 +13,32 @@ Thumbs.db
 .DS_Store
 
 data/
+
+.env
+logs/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+ETLenv/
+venv/
+
+# Logs
+logs/
+*.log
+
+# Data folders
+lakehouse/
+*.parquet
+*.duckdb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

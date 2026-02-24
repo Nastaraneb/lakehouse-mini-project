@@ -1,7 +1,9 @@
 import json
 import pandas as pd
+from src.common.logger import get_logger
+logger = get_logger("bronze_subscriptions")
 
-from src.paths import SUBSCRIPTIONS_JSON, BRONZE_DIR
+from src.common.paths import SUBSCRIPTIONS_JSON, BRONZE_DIR
 
 
 def main():
@@ -13,13 +15,13 @@ def main():
 
     df = pd.DataFrame(data)
 
-    # Bronze: keep raw-ish, convert to string to avoid parquet type issues
+    # Bronze: keep raw convert to string to avoid parquet issues
     df = df.astype(str)
 
     out_path = BRONZE_DIR / "subscriptions_raw.parquet"
     df.to_parquet(out_path, index=False)
 
-    print(" Bronze subscriptions saved:", len(df))
+    logger.info(f"Bronze subscriptions saved: {len(df)}")
 
 
 if __name__ == "__main__":

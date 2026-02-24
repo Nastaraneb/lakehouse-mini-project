@@ -1,6 +1,8 @@
 import pandas as pd
+from src.common.logger import get_logger
+logger = get_logger("silver_marketing")
 
-from src.paths import BRONZE_DIR, SILVER_DIR, QUARANTINE_DIR
+from src.common.paths import BRONZE_DIR, SILVER_DIR, QUARANTINE_DIR
 
 
 def main():
@@ -15,7 +17,7 @@ def main():
     df["spend_num"] = pd.to_numeric(df["spend"], errors="coerce")
 
     
-    bad_mask = df["date"].isna() | df["spend_num"].isna() | (df["spend_num"] < 0)
+    bad_mask = df["date"].isna() | df["spend_num"].isna() | (df["spend_num"] < 0) # One negative spend row is fixed!
     bad_df = df[bad_mask].copy()
     good_df = df[~bad_mask].copy()
 
@@ -41,9 +43,8 @@ def main():
     daily_full.to_parquet(SILVER_DIR / "marketing_spend_clean.parquet", index=False)
     bad_df.to_parquet(QUARANTINE_DIR / "marketing_spend_rejected_silver.parquet", index=False)
 
-    print(" Silver marketing saved:", len(daily_full))
-    print(" Silver marketing rejected:", len(bad_df))
-
+    logger.info(f"Silver marketing saved: {len(daily_full)}")
+    logger.info(f"Silver marketing rejected: {len(bad_df)}")
 
 if __name__ == "__main__":
     main()
