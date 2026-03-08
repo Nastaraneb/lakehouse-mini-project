@@ -61,6 +61,7 @@ All KPIs are materialized as Parquet and registered in DuckDB.
 
 ## How to Run
 
+<<<<<<< HEAD
 ```bash
 # Setup requirements
 
@@ -90,3 +91,17 @@ python -m src.gold.ltv_cac_ratio
 # Load into DuckDB
 python -m src.gold.load_to_duckdb
 python -m src.gold.build_dims
+=======
+python -m src.main
+
+# Run Bronze
+python -m src.bronze.*
+
+# Run Silver
+python -m src.silver.*
+
+# Run Gold
+python -m src.gold.*
+
+# Load Gold tables into DuckDB
+python -m src.gold.load_to_duckdb
